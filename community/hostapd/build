@@ -1,0 +1,11 @@
+#!/bin/sh -e
+
+export CFLAGS="$CFLAGS -I/usr/include/libnl3"
+
+sed -i 's/PKG_CONFIG ?=.*/PKG_CONFIG=true/' src/drivers/drivers.mak
+
+cd hostapd
+cp defconfig .config
+
+make -j
+make DESTDIR="$1" PREFIX=/usr install
